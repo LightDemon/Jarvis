@@ -43,32 +43,35 @@ namespace Jarvis
 
 
                 //build status report grammer
-                Choices ch_status = new Choices();
-                ch_status.Add("status report");
-                ch_status.Add("house status");
-                ch_status.Add("system status");
+                Choices ch_Status = new Choices();
+                ch_Status.Add("status report");
+                ch_Status.Add("house status");
+                ch_Status.Add("system status");
                 GrammarBuilder gb_Info = new GrammarBuilder();
                 gb_Info.Append("Jarvis");
-                gb_Info.Append(ch_status);
+                gb_Info.Append(ch_Status);
                 Grammar g_Info = new Grammar(gb_Info);
 
+                //build lighting grammer
+                Choices ch_Light = new Choices();
+                ch_Light.Add("living room light");
+                ch_Light.Add("living room fan");
+                ch_Light.Add("study light");
+                Choices ch_Power = new Choices();
+                ch_Power.Add("Turn on");
+                ch_Power.Add("Turn off");
+                GrammarBuilder gb_Light = new GrammarBuilder();
+                gb_Light.Append("Jarvis");
+                gb_Light.Append(ch_Power);
+                gb_Light.Append("the");
+                gb_Light.Append(ch_Light);
+                Grammar g_Light = new Grammar(gb_Light);
 
-                Choices ch_Numbers = new Choices();
-                ch_Numbers.Add("1");
-                ch_Numbers.Add("2");
-                ch_Numbers.Add("3");
-                ch_Numbers.Add("4");
-                GrammarBuilder gb_WhatIsXplusY = new GrammarBuilder();
-                gb_WhatIsXplusY.Append("What is");
-                gb_WhatIsXplusY.Append(ch_Numbers);
-                gb_WhatIsXplusY.Append("plus");
-                gb_WhatIsXplusY.Append(ch_Numbers);
-                Grammar g_WhatIsXplusY = new Grammar(gb_WhatIsXplusY);
 
                 //Load Grammer
                 sre.LoadGrammarAsync(g_StartStop);
-                sre.LoadGrammarAsync(g_WhatIsXplusY);
                 sre.LoadGrammarAsync(g_Info);
+                sre.LoadGrammarAsync(g_Light);
                 sre.RecognizeAsync(RecognizeMode.Multiple);
 
                 //Exit point
@@ -107,17 +110,17 @@ namespace Jarvis
                 Console.WriteLine("(Speaking: Farewell)");
                 ss.Speak("Farewell");
             }
-            if (txt.IndexOf("What") >= 0 && txt.IndexOf("plus") >= 0)
-            {
-                string[] words = txt.Split(' ');
-                int num1 = int.Parse(words[2]);
-                int num2 = int.Parse(words[4]);
-                int sum = num1 + num2;
-                Console.WriteLine("(Speaking: " + words[2] + " plus " +
-                  words[4] + " equals " + sum + ")");
-                ss.SpeakAsync(words[2] + " plus " + words[4] +
-                  " equals " + sum);
-            }
+            //if (txt.IndexOf("What") >= 0 && txt.IndexOf("plus") >= 0)
+            //{
+            //    string[] words = txt.Split(' ');
+            //    int num1 = int.Parse(words[2]);
+            //    int num2 = int.Parse(words[4]);
+            //    int sum = num1 + num2;
+            //    Console.WriteLine("(Speaking: " + words[2] + " plus " +
+            //      words[4] + " equals " + sum + ")");
+            //    ss.SpeakAsync(words[2] + " plus " + words[4] +
+            //      " equals " + sum);w
+            //}
 
             if (txt.IndexOf("report") >= 0)
             {
