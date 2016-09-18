@@ -40,8 +40,6 @@ namespace Jarvis
                 gb_StartStop.Append(ch_StartStopCommands);
                 Grammar g_StartStop = new Grammar(gb_StartStop);
 
-
-
                 //build status report grammer
                 Choices ch_Status = new Choices();
                 ch_Status.Add("status report");
@@ -67,11 +65,30 @@ namespace Jarvis
                 gb_Light.Append(ch_Light);
                 Grammar g_Light = new Grammar(gb_Light);
 
+                //build thermostat grammer
+                Choices ch_Temp = new Choices();
+                ch_Temp.Add("70");
+                ch_Temp.Add("71");
+                ch_Temp.Add("72");
+                ch_Temp.Add("73");
+                ch_Temp.Add("74");
+                ch_Temp.Add("75");
+                ch_Temp.Add("76");
+                ch_Temp.Add("77");
+                GrammarBuilder gb_Temp = new GrammarBuilder();
+                gb_Temp.Append("Jarvis set the temperature to");
+                gb_Temp.Append(ch_Temp);
+                Grammar g_Temp = new Grammar(gb_Temp);
+
+                GrammarBuilder gb_SetTemp = new GrammarBuilder("Jarvis what is the temperature");
+                Grammar g_SetTemp = new Grammar(gb_SetTemp);
 
                 //Load Grammer
                 sre.LoadGrammarAsync(g_StartStop);
                 sre.LoadGrammarAsync(g_Info);
                 sre.LoadGrammarAsync(g_Light);
+                sre.LoadGrammarAsync(g_Temp);
+                sre.LoadGrammarAsync(g_SetTemp);
                 sre.RecognizeAsync(RecognizeMode.Multiple);
 
                 //Exit point
